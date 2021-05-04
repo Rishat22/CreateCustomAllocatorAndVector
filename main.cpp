@@ -1,7 +1,7 @@
 #include <iostream>
 #include <map>
 #include <vector>
-#include "logging_allocator.hpp"
+#include "custom_allocator.hpp"
 #include "Vector.hpp"
 
 using namespace std;
@@ -73,10 +73,10 @@ int main(int, char *[]) {
 	auto mapWithCustomAllocator = std::map<
 			int, float,
 			std::less< int >,
-			logging_allocator<
+			custom_allocator<
 			std::pair< int, float >
 			>
-			>{ logging_allocator<std::pair< int, float >>(10) };
+			>{ custom_allocator<std::pair< int, float >>(10) };
 
 	for (int i = 0; i < 10; ++i)
 	{

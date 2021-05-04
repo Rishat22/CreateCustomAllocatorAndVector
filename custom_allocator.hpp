@@ -1,11 +1,11 @@
-#ifndef LOGGING_ALLOCATOR_H
-#define LOGGING_ALLOCATOR_H
+#ifndef custom_allocator_H
+#define custom_allocator_H
 #include <iostream>
 
 #define USE_PRETTY 1
 
 template<typename T>
-struct logging_allocator {
+struct custom_allocator {
 	using value_type = T;
 
 	using pointer = T*;
@@ -15,17 +15,17 @@ struct logging_allocator {
 
 	template<typename U>
 	struct rebind {
-		using other = logging_allocator<U>;
+		using other = custom_allocator<U>;
 	};
 
-	logging_allocator() = default;
-	logging_allocator(const std::size_t size)
+	custom_allocator() = default;
+	custom_allocator(const std::size_t size)
 	{
 		ReAlloc(size);
 	}
-	~logging_allocator() = default;
+	~custom_allocator() = default;
 
-	logging_allocator(const logging_allocator<T>& inputAllocator)
+	custom_allocator(const custom_allocator<T>& inputAllocator)
 		:	m_Size(inputAllocator.m_Size)
 		,	m_Data(inputAllocator.m_Data)
 		,	m_Capacity(inputAllocator.m_Capacity)
@@ -34,7 +34,7 @@ struct logging_allocator {
 
 	/* How to implement it correctly here */
 	template<typename U>
-	logging_allocator(const logging_allocator<U>& inputAllocator)
+	custom_allocator(const custom_allocator<U>& inputAllocator)
 //		:	m_Size(inputAllocator.m_Size)
 //		,	m_Data(inputAllocator.m_Data)
 //		,	m_Capacity(inputAllocator.m_Capacity)
@@ -105,4 +105,4 @@ private:
 	size_t m_Size = 0;
 	size_t m_Capacity = 0;
 };
-#endif // LOGGING_ALLOCATOR_H
+#endif // custom_allocator_H

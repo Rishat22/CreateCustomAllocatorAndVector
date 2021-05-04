@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(project_sources
     main.cpp
-    logging_allocator.hpp
+    custom_allocator.hpp
     Vector.hpp
     )
 
