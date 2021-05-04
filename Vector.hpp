@@ -58,7 +58,7 @@ protected:
 	lDataType*                                 m_Ptr;
 };
 
-template <typename T>
+template <typename T, typename A = std::allocator<T>>
 class Vector
 {
 	using iterator = VecIterator<T>;
@@ -66,11 +66,22 @@ class Vector
 	using reverse_iterator =  VecIterator<T>;
 	using const_reverse_iterator =  VecIterator<const T>;
 
+	/* How to implement it correctly here */
+//	typename std::allocator_traits<A>::pointer allocData;
+
 public:
 	Vector()
 	{
 		ReAlloc(2);
 	}
+
+	/* How to implement it correctly here */
+//	Vector(A allocator)
+//		:	m_Allocator(allocator)
+//	{
+//		allocData = std::allocator_traits<A>::allocate(m_Allocator, 1);
+//		std::allocator_traits<A>::construct(m_Allocator, allocData, ?);
+//	}
 	~Vector();
 
 	void Clear();
@@ -93,24 +104,28 @@ private:
 	T* m_Data = nullptr;
 	size_t m_Size = 0;
 	size_t m_Capacity = 0;
+	A m_Allocator;
 };
 
-template<typename T>
-Vector<T>::~Vector()
+template <typename T, typename A>
+Vector<T, A>::~Vector()
 {
+	/* How to implement it correctly here */
+//	std::allocator_traits<A>::destroy(m_Allocator, allocData);
+//	std::allocator_traits<A>::deallocate(m_Allocator, allocData, 1);
 	Clear();
 	::operator delete( m_Data, m_Capacity * sizeof (T) );
 }
 
-template<typename T>
-void Vector<T>::Clear()
+template <typename T, typename A>
+void Vector<T, A>::Clear()
 {
 	for(size_t i = 0; i < m_Size; i++)
 		m_Data[i].~T();
 }
 
-template<typename T>
-void Vector<T>::PushBack(const T& value)
+template <typename T, typename A>
+void Vector<T, A>::PushBack(const T& value)
 {
 	if(m_Size >= m_Capacity)
 		ReAlloc(m_Capacity + m_Capacity /2);
@@ -119,8 +134,8 @@ void Vector<T>::PushBack(const T& value)
 	m_Size++;
 }
 
-template<typename T>
-void Vector<T>::PushBack(const T&& value)
+template <typename T, typename A>
+void Vector<T, A>::PushBack(const T&& value)
 {
 	if(m_Size >= m_Capacity)
 		ReAlloc(m_Capacity + m_Capacity /2);
@@ -129,8 +144,8 @@ void Vector<T>::PushBack(const T&& value)
 	m_Size++;
 }
 
-template<typename T>
-const T& Vector<T>::operator[](const size_t index) const
+template <typename T, typename A>
+const T& Vector<T, A>::operator[](const size_t index) const
 {
 	if(index >= m_Size)
 	{
@@ -139,8 +154,8 @@ const T& Vector<T>::operator[](const size_t index) const
 	return m_Data[index];
 }
 
-template<typename T>
-T& Vector<T>::operator[](const size_t index)
+template <typename T, typename A>
+T& Vector<T, A>::operator[](const size_t index)
 {
 	if(index >= m_Size)
 	{
@@ -149,20 +164,20 @@ T& Vector<T>::operator[](const size_t index)
 	return m_Data[index];
 }
 
-template<typename T>
-size_t Vector<T>::Size() const
+template <typename T, typename A>
+size_t Vector<T, A>::Size() const
 {
 	return m_Size;
 }
 
-template<typename T>
-bool Vector<T>::Empty() const
+template <typename T, typename A>
+bool Vector<T, A>::Empty() const
 {
 	return m_Size == 0;
 }
 
-template <typename T>
-void Vector<T>::ReAlloc(const size_t newCapacity)
+template <typename T, typename A>
+void Vector<T, A>::ReAlloc(const size_t newCapacity)
 {
 	T* newBlock = (T*)::operator new( newCapacity * sizeof (T) );
 

@@ -15,7 +15,7 @@ using namespace std;
 //	Vector3(float scalar)
 //			: x(scalar), y(scalar), z(scalar)
 //	{
-//				cout << "Constract\n";
+//		cout << "Constract\n";
 //	}
 
 //	Vector3(float x, float y, float z)
@@ -31,6 +31,15 @@ using namespace std;
 //};
 
 
+float fact(int number)
+{
+	if(number < 0)
+		return 0;
+	if (number == 0)
+		return 1;
+	else
+		return number * fact(number - 1);
+}
 
 template<typename T>
 std::ostream& print(std::ostream &out, T const &val) {
@@ -52,26 +61,44 @@ std::ostream& operator<<(std::ostream &out, TT<Args...> const &cont) {
 
 
 int main(int, char *[]) {
+
+//	auto keyFactorialMap = std::map< int, float >{};
+
+//	for (int i = 0; i < 10; ++i)
+//	{
+//		keyFactorialMap[i] = fact(i);
+//	}
+//	std::cout << keyFactorialMap;
+
 	auto mapWithCustomAllocator = std::map<
-			int,	float,
-			std::less<int>,
+			int, float,
+			std::less< int >,
 			logging_allocator<
-			std::pair< int, float	>
+			std::pair< int, float >
 			>
-			>{logging_allocator<std::pair< int, float	>>(10)};
+			>{ logging_allocator<std::pair< int, float >>(10) };
 
-	for (int i = 0; i < 5; ++i) {
-		mapWithCustomAllocator[i] = static_cast<float>(i);
+	for (int i = 0; i < 10; ++i)
+	{
+		mapWithCustomAllocator[i] = fact(i);
 	}
+	std::cout << mapWithCustomAllocator;
 
-	cout << mapWithCustomAllocator;
-
-	Vector<int> customVector;
-	for (int i = 0; i < 5; ++i) {
+	Vector< int > customVector;
+	for (int i = 0; i < 10; ++i) {
 		customVector.PushBack(i);
 	}
+	std::cout << customVector;
 
-	cout << customVector;
+	//	auto customVectorWithCustomAllocator = Vector< int,
+	//						logging_allocator< int > >
+	//						{ logging_allocator< int >(10) };
+
+	//	for (int i = 0; i < 10; ++i) {
+	//		keyFactorialMap[i] = fact(i);
+	//	}
+
+	//	std::cout << customVectorWithCustomAllocator;
 
 	return 0;
 }

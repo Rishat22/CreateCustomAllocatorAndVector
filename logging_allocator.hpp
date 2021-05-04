@@ -25,9 +25,20 @@ struct logging_allocator {
 	}
 	~logging_allocator() = default;
 
-	template<typename U>
-	logging_allocator(const logging_allocator<U>&) {
+	logging_allocator(const logging_allocator<T>& inputAllocator)
+		:	m_Size(inputAllocator.m_Size)
+		,	m_Data(inputAllocator.m_Data)
+		,	m_Capacity(inputAllocator.m_Capacity)
+	{
+	}
 
+	/* How to implement it correctly here */
+	template<typename U>
+	logging_allocator(const logging_allocator<U>& inputAllocator)
+//		:	m_Size(inputAllocator.m_Size)
+//		,	m_Data(inputAllocator.m_Data)
+//		,	m_Capacity(inputAllocator.m_Capacity)
+	{
 	}
 
 	T *allocate(std::size_t n) {
@@ -75,7 +86,7 @@ private:
 		T* newBlock = (T*)::operator new( newCapacity * sizeof (T) );
 
 		if(newCapacity < m_Size)
-				m_Size = newCapacity;
+			m_Size = newCapacity;
 
 		for(size_t i = 0; i < m_Size; i++)
 			newBlock[i] = std::move(m_Data[i]);
@@ -88,7 +99,7 @@ private:
 		m_Capacity = newCapacity;
 	}
 
-	bool IsUsedAllocatedMem () { return m_Size != 0; }
+	bool IsUsedAllocatedMem () { return m_Capacity != 0; }
 private:
 	T* m_Data = nullptr;
 	size_t m_Size = 0;
