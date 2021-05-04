@@ -1,2 +1,4 @@
-# CreateCustomAllocatorAndVector
-In the course of the work, a custom distributor and a custom container (vector) will be created.
+# custom allocator
+
+1.	Creating a custom allocator
+2.	Creating a custom container
