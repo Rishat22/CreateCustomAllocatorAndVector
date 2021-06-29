@@ -70,13 +70,13 @@ int main(int, char *[]) {
 //	}
 //	std::cout << keyFactorialMap;
 
-	auto mapWithCustomAllocator = std::map<
-			int, float,
+	auto mapWithCustomAllocator =
+			std::map<int, float,
 			std::less< int >,
 			custom_allocator<
-			std::pair< int, float >
+			std::pair< int, float >, 10
 			>
-			>{ custom_allocator<std::pair< int, float >>(10) };
+			>{};
 
 	for (int i = 0; i < 10; ++i)
 	{
@@ -90,13 +90,13 @@ int main(int, char *[]) {
 	}
 	std::cout << customVector;
 
-	//	auto customVectorWithCustomAllocator = Vector< int,
-	//						logging_allocator< int > >
-	//						{ logging_allocator< int >(10) };
+		auto customVectorWithCustomAllocator = Vector< int,
+							custom_allocator< int, 10 > >
+							{};
 
-	//	for (int i = 0; i < 10; ++i) {
-	//		keyFactorialMap[i] = fact(i);
-	//	}
+		for (int i = 0; i < 10; ++i) {
+			customVectorWithCustomAllocator[i] = fact(i);
+		}
 
 	//	std::cout << customVectorWithCustomAllocator;
 
