@@ -62,13 +62,13 @@ std::ostream& operator<<(std::ostream &out, TT<Args...> const &cont) {
 
 int main(int, char *[]) {
 
-//	auto keyFactorialMap = std::map< int, float >{};
+	auto keyFactorialMap = std::map< int, float >{};
 
-//	for (int i = 0; i < 10; ++i)
-//	{
-//		keyFactorialMap[i] = fact(i);
-//	}
-//	std::cout << keyFactorialMap;
+	for (int i = 0; i < 10; ++i)
+	{
+		keyFactorialMap[i] = fact(i);
+	}
+	std::cout << keyFactorialMap;
 
 	auto mapWithCustomAllocator =
 			std::map<int, float,
@@ -86,19 +86,19 @@ int main(int, char *[]) {
 
 	Vector< int > customVector;
 	for (int i = 0; i < 10; ++i) {
-		customVector.PushBack(i);
+		customVector.PushBack(fact(i));
 	}
 	std::cout << customVector;
 
-		auto customVectorWithCustomAllocator = Vector< int,
-							custom_allocator< int, 10 > >
-							{};
+	auto customVectorWithCustomAllocator = Vector< int,
+			custom_allocator< int, 10 > >
+	{};
 
-		for (int i = 0; i < 10; ++i) {
-			customVectorWithCustomAllocator[i] = fact(i);
-		}
+	for (int i = 0; i < 10; ++i) {
+		customVectorWithCustomAllocator.PushBack(fact(i));
+	}
 
-	//	std::cout << customVectorWithCustomAllocator;
+	std::cout << customVectorWithCustomAllocator;
 
 	return 0;
 }

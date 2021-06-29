@@ -115,22 +115,30 @@ void Vector<T, A>::Clear()
 {
 	for(size_t i = 0; i < m_Size; i++)
 		m_Data[i].~T();
+	std::free(m_Data);
+	m_Data = nullptr;
 }
 
 template <typename T, typename A>
 void Vector<T, A>::PushBack(const T& value)
 {
-	auto memBlock = m_Allocator.allocate(size_t(1));
-	m_Data = new (memBlock) T(value);
-	m_Size++;
+	if(m_Data == nullptr)
+	{
+		auto memBlock = m_Allocator.allocate(size_t(1));
+		m_Data = new (memBlock) T( std::move(value));
+	}
+	m_Data[m_Size++] = value;
 }
 
 template <typename T, typename A>
 void Vector<T, A>::PushBack(const T&& value)
 {
-	auto* memBlock = m_Allocator.allocate(size_t(1));
-	m_Data[m_Size] = new (memBlock) T( std::move(value));
-	m_Size++;
+	if(m_Data == nullptr)
+	{
+		auto memBlock = m_Allocator.allocate(size_t(1));
+		m_Data = new (memBlock) T( std::move(value));
+	}
+	m_Data[m_Size++] = value;
 }
 
 template <typename T, typename A>
