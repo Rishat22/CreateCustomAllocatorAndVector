@@ -19,7 +19,10 @@ struct custom_allocator {
 	};
 
 	custom_allocator() = default;
-	~custom_allocator() = default;
+	~custom_allocator()
+	{
+		::operator delete( m_Data, m_Capacity * sizeof (T) );
+	}
 
 	explicit custom_allocator(const custom_allocator<T,  SIZE>& /*inputAllocator*/)  noexcept
 	{
@@ -35,14 +38,14 @@ struct custom_allocator {
 		{
 			ReAlloc(SIZE);
 		}
+		if (m_Size == SIZE)
+			throw std::out_of_range("Maximum number of elements must not exceed the specified value");
 		return &m_Data[m_Size++];
 	}
 
 	void deallocate(T *p, std::size_t n) {
 		if( m_Capacity > n)
 			m_Capacity -= n;
-		else
-			std::free(p);
 	}
 
 	template<typename U, typename ...Args>
@@ -57,7 +60,7 @@ struct custom_allocator {
 private:
 	void ReAlloc(const size_t newCapacity)
 	{
-		auto newBlock = std::malloc(SIZE * sizeof(T));
+		auto newBlock = std::malloc(newCapacity * sizeof(T));
 		if (newBlock == nullptr)
 			throw std::bad_alloc();
 

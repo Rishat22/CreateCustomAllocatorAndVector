@@ -72,10 +72,7 @@ class Vector
 //	typename std::allocator_traits<A>::pointer allocData;
 
 public:
-	Vector()
-	{
-	}
-
+	Vector() = default;
 	/* How to implement it correctly here */
 //	Vector(A allocator)
 //		:	m_Allocator(allocator)
@@ -83,9 +80,8 @@ public:
 //		allocData = std::allocator_traits<A>::allocate(m_Allocator, 1);
 //		std::allocator_traits<A>::construct(m_Allocator, allocData, ?);
 //	}
-	~Vector();
+	~Vector() = default;
 
-	void Clear();
 	void PushBack(const T& value);
 	void PushBack(const T&& value);
 	const T& operator[](const size_t index) const;
@@ -94,8 +90,8 @@ public:
 	bool Empty() const;
 
 	/* Iterators */
-	iterator			begin() const { return iterator(&m_Data[0]); }
-	iterator			end() const { return iterator(&m_Data[m_Size]); }
+	iterator	begin() const { return iterator(&m_Data[0]); }
+	iterator	end() const { return iterator(&m_Data[m_Size]); }
 	const_iterator	cbegin() const { return const_iterator(&m_Data[0]);}
 	const_iterator	cend() const { return const_iterator(&m_Data[m_Size]);}
 
@@ -105,21 +101,6 @@ private:
 	size_t m_Capacity = 0;
 	Allocator m_Allocator;
 };
-
-template <typename T, typename A>
-Vector<T, A>::~Vector()
-{
-	Clear();
-}
-
-template <typename T, typename A>
-void Vector<T, A>::Clear()
-{
-	for(size_t i = 0; i < m_Size; i++)
-		m_Data[i].~T();
-	std::free(m_Data);
-	m_Data = nullptr;
-}
 
 template <typename T, typename A>
 void Vector<T, A>::PushBack(const T& value)
