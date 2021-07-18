@@ -8,6 +8,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(project_sources
     main.cpp
     custom_allocator.hpp
+    VecIterator.hpp
     Vector.hpp
     )
 
