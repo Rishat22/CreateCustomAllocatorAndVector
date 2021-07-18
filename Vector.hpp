@@ -21,10 +21,10 @@ public:
 	VecIterator(const VecIterator<lDataType>& rawIterator) = default;
 	~VecIterator() = default;
 
-	VecIterator<lDataType>&                  operator=(const VecIterator<lDataType>& rawIterator) = default;
-	VecIterator<lDataType>&                  operator=(lDataType* ptr){m_Ptr = ptr;return (*this);}
+	VecIterator<lDataType>&	operator=(const VecIterator<lDataType>& rawIterator) = default;
+	VecIterator<lDataType>&	operator=(lDataType* ptr){m_Ptr = ptr;return (*this);}
 
-	operator                                    bool()const
+	operator bool() const
 	{
 		if(m_Ptr)
 			return true;
@@ -32,30 +32,32 @@ public:
 			return false;
 	}
 
-	bool                                        operator==(const VecIterator<lDataType>& rawIterator)const{return (m_Ptr == rawIterator.getConstPtr());}
-	bool                                        operator!=(const VecIterator<lDataType>& rawIterator)const{return (m_Ptr != rawIterator.getConstPtr());}
+	bool operator==(const VecIterator<lDataType>& rawIterator) const {return (m_Ptr == rawIterator.getConstPtr());}
+	bool operator!=(const VecIterator<lDataType>& rawIterator) const {return (m_Ptr != rawIterator.getConstPtr());}
 
-	VecIterator<lDataType>&                  operator+=(const difference_type& movement){m_Ptr += movement;return (*this);}
-	VecIterator<lDataType>&                  operator-=(const difference_type& movement){m_Ptr -= movement;return (*this);}
-	VecIterator<lDataType>&                  operator++(){++m_Ptr;return (*this);}
-	VecIterator<lDataType>&                  operator--(){--m_Ptr;return (*this);}
-	VecIterator<lDataType>                   operator++(int){auto temp(*this);++m_Ptr;return temp;}
-	VecIterator<lDataType>                   operator--(int){auto temp(*this);--m_Ptr;return temp;}
-	VecIterator<lDataType>                   operator+(const difference_type& movement){auto oldPtr = m_Ptr;m_Ptr+=movement;auto temp(*this);m_Ptr = oldPtr;return temp;}
-	VecIterator<lDataType>                   operator-(const difference_type& movement){auto oldPtr = m_Ptr;m_Ptr-=movement;auto temp(*this);m_Ptr = oldPtr;return temp;}
+	VecIterator<lDataType>&	operator+=(const difference_type& movement) {m_Ptr += movement;return (*this);}
+	VecIterator<lDataType>&	operator-=(const difference_type& movement) {m_Ptr -= movement;return (*this);}
+	VecIterator<lDataType>&	operator++() {++m_Ptr;return (*this);}
+	VecIterator<lDataType>&	operator--() {--m_Ptr;return (*this);}
+	VecIterator<lDataType>	operator++(int) {auto temp(*this);++m_Ptr;return temp;}
+	VecIterator<lDataType>	operator--(int) {auto temp(*this);--m_Ptr;return temp;}
+	VecIterator<lDataType>	operator+(const difference_type& movement)
+	{auto oldPtr = m_Ptr;m_Ptr+=movement;auto temp(*this);m_Ptr = oldPtr;return temp;}
+	VecIterator<lDataType>	operator-(const difference_type& movement)
+	{auto oldPtr = m_Ptr;m_Ptr-=movement;auto temp(*this);m_Ptr = oldPtr;return temp;}
 
-	difference_type                             operator-(const VecIterator<lDataType>& rawIterator){return std::distance(rawIterator.getPtr(),this->getPtr());}
+	difference_type	operator-(const VecIterator<lDataType>& rawIterator)
+	{return std::distance(rawIterator.getPtr(),this->getPtr());}
 
-	lDataType&                                 operator*(){return *m_Ptr;}
-	const lDataType&                           operator*()const{return *m_Ptr;}
-	lDataType*                                 operator->(){return m_Ptr;}
+	lDataType&	operator*() { return *m_Ptr; }
+	const lDataType&	operator*() const { return *m_Ptr; }
+	lDataType*	operator->() { return m_Ptr; }
 
-	lDataType*                                 getPtr()const{return m_Ptr;}
-	const lDataType*                           getConstPtr()const{return m_Ptr;}
+	lDataType* getPtr()const{ return m_Ptr; }
+	const lDataType* getConstPtr() const { return m_Ptr; }
 
 protected:
-
-	lDataType*                                 m_Ptr;
+	lDataType*	m_Ptr;
 };
 
 template <typename T, typename Allocator = std::allocator<T>>
