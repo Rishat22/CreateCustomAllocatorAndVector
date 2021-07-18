@@ -107,8 +107,9 @@ void Vector<T, A>::PushBack(const T& value)
 {
 	if(m_Data == nullptr)
 	{
-		auto memBlock = m_Allocator.allocate(size_t(1));
-		m_Data = new (memBlock) T( std::move(value));
+		m_Data = m_Allocator.allocate(size_t(1));
+		m_Allocator.construct(m_Data);
+//		m_Data = new (memBlock) T( std::move(value));
 	}
 	m_Data[m_Size++] = value;
 }
@@ -118,8 +119,9 @@ void Vector<T, A>::PushBack(const T&& value)
 {
 	if(m_Data == nullptr)
 	{
-		auto memBlock = m_Allocator.allocate(size_t(1));
-		m_Data = new (memBlock) T( std::move(value));
+		m_Data = m_Allocator.allocate(size_t(1));
+		m_Allocator.construct(m_Data);
+//		m_Data = new (memBlock) T( std::move(value));
 	}
 	m_Data[m_Size++] = value;
 }
