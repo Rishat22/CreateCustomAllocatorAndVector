@@ -11,18 +11,10 @@ class Vector
 	using reverse_iterator =  VecIterator<T>;
 	using const_reverse_iterator =  VecIterator<const T>;
 
-	/* How to implement it correctly here */
-//	typename std::allocator_traits<A>::pointer allocData;
+
 
 public:
 	Vector() = default;
-	/* How to implement it correctly here */
-//	Vector(A allocator)
-//		:	m_Allocator(allocator)
-//	{
-//		allocData = std::allocator_traits<A>::allocate(m_Allocator, 1);
-//		std::allocator_traits<A>::construct(m_Allocator, allocData, ?);
-//	}
 	~Vector() = default;
 
 	void PushBack(const T& value);

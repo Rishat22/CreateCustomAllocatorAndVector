@@ -64,7 +64,7 @@ int main(int, char *[]) {
 
 	auto keyFactorialMap = std::map< int, float >{};
 
-	for (int i = 0; i < 10; ++i)
+	for (int i = 0; i < 9; ++i)
 	{
 		keyFactorialMap[i] = fact(i);
 	}
@@ -78,14 +78,14 @@ int main(int, char *[]) {
 			>
 			>{};
 
-	for (int i = 0; i < 10; ++i)
+	for (int i = 0; i < 9; ++i)
 	{
 		mapWithCustomAllocator[i] = fact(i);
 	}
 	std::cout << mapWithCustomAllocator;
 
 	Vector< int > customVector;
-	for (int i = 0; i < 10; ++i) {
+	for (int i = 0; i < 9; ++i) {
 		customVector.PushBack(fact(i));
 	}
 	std::cout << customVector;
@@ -94,7 +94,7 @@ int main(int, char *[]) {
 			custom_allocator< int, 10 > >
 	{};
 
-	for (int i = 0; i < 10; ++i) {
+	for (int i = 0; i < 9; ++i) {
 		customVectorWithCustomAllocator.PushBack(fact(i));
 	}
 
