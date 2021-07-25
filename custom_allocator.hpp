@@ -21,7 +21,7 @@ struct custom_allocator {
 	custom_allocator() = default;
 	~custom_allocator()
 	{
-		::operator delete( m_Data, SIZE * sizeof (T) );
+		free( m_Data );
 	}
 
 	explicit custom_allocator(const custom_allocator<T,  SIZE>& /*inputAllocator*/)  noexcept
@@ -59,11 +59,11 @@ struct custom_allocator {
 private:
 	void ReAlloc(const size_t new_size)
 	{
-		T* newBlock = (T*)::operator new(new_size * sizeof(T));
+		auto newBlock = std::malloc(new_size * sizeof(T));
 		if (newBlock == nullptr)
 			throw std::bad_alloc();
 
-		m_Data = newBlock;
+		m_Data = reinterpret_cast<T *>(newBlock);
 	}
 private:
 	T* m_Data = nullptr;
