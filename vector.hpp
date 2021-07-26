@@ -1,15 +1,15 @@
 #ifndef VECTOR_H
 #define VECTOR_H
 #include <algorithm>
-#include "VecIterator.hpp"
+#include "vector_iterator.hpp"
 
 template <typename T, typename Allocator = std::allocator<T>>
 class Vector
 {
-	using iterator = VecIterator<T>;
-	using const_iterator = VecIterator<const T>;
-	using reverse_iterator =  VecIterator<T>;
-	using const_reverse_iterator =  VecIterator<const T>;
+	using iterator = VectorIterator<T>;
+	using const_iterator = VectorIterator<const T>;
+	using reverse_iterator =  VectorIterator<T>;
+	using const_reverse_iterator =  VectorIterator<const T>;
 
 
 
